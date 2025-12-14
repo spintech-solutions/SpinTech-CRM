@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 export const CTA = () => {
   return (
@@ -31,9 +32,9 @@ export const CTA = () => {
           transition={{ delay: 0.2 }}
           className="flex flex-col sm:flex-row justify-center gap-4"
         >
-          <button className="bg-black text-white px-8 py-3 rounded-full font-medium text-sm hover:bg-gray-800 transition-all hover:shadow-lg">
+          <Link to="/login" className="bg-black text-white px-8 py-3 rounded-full font-medium text-sm hover:bg-gray-800 transition-all hover:shadow-lg">
             Get Started for Free
-          </button>
+          </Link>
           <button className="bg-white text-gray-900 border border-gray-200 px-8 py-3 rounded-full font-medium text-sm hover:bg-gray-50 transition-all">
             Talk to Sales
           </button>

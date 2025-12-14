@@ -1,4 +1,4 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { ArrowRight, PlayCircle, LayoutGrid, Users, BarChart3, DollarSign, Activity } from 'lucide-react';
 
@@ -64,10 +64,10 @@ export const Hero = () => {
             clutter.
           </p>
           <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-            <button className="w-full sm:w-auto bg-black text-white px-8 py-4 rounded-full font-medium text-base hover:bg-gray-800 transition-all hover:shadow-xl hover:shadow-gray-200/50 flex items-center justify-center gap-2 group">
+            <Link to="/login" className="w-full sm:w-auto bg-black text-white px-8 py-4 rounded-full font-medium text-base hover:bg-gray-800 transition-all hover:shadow-xl hover:shadow-gray-200/50 flex items-center justify-center gap-2 group">
               Start for free
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-            </button>
+            </Link>
             <button className="w-full sm:w-auto bg-white text-gray-700 border border-gray-200 px-8 py-4 rounded-full font-medium text-base hover:bg-gray-50 hover:border-gray-300 transition-all flex items-center justify-center gap-2">
               <PlayCircle className="w-4 h-4" />
               View Demo

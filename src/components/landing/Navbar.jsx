@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import SpintechLogo from '../../assets/SpintechLogo.png';
 
 export const Navbar = () => {
@@ -46,12 +47,12 @@ export const Navbar = () => {
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <a href="#" className="hidden md:block text-sm font-medium text-gray-500 hover:text-black transition-colors">
+          <Link to="/login" className="hidden md:block text-sm font-medium text-gray-500 hover:text-black transition-colors">
             Log in
-          </a>
-          <a href="#" className="bg-black hover:bg-gray-800 text-white text-sm font-medium px-4 py-2 rounded-full transition-all duration-200 border border-transparent hover:shadow-lg hover:shadow-gray-200">
+          </Link>
+          <Link to="/login" className="bg-black hover:bg-gray-800 text-white text-sm font-medium px-4 py-2 rounded-full transition-all duration-200 border border-transparent hover:shadow-lg hover:shadow-gray-200">
             Get Started
-          </a>
+          </Link>
         </div>
       </div>
     </motion.nav>
