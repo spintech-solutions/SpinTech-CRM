@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { Button } from '../../components/ui/button';
 import {
@@ -11,24 +11,18 @@ import {
 } from "../../components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar"
 import { useNavigate } from 'react-router-dom';
+import { Loader2 } from 'lucide-react';
 
 export const UserNav = () => {
   const { user, profile, signOut } = useAuth();
   const navigate = useNavigate();
+  const [isSigningOut, setIsSigningOut] = useState(false);
 
   const handleSignOut = async () => {
+    setIsSigningOut(true);
     await signOut();
-    navigate('/login');
-  };
-
-  const getInitials = (name) => {
-    if (!name) return 'U';
-    return name
-      .split(' ')
-      .map((part) => part[0])
-      .join('')
-      .toUpperCase()
-      .substring(0, 2);
+    setIsSigningOut(false);
+    navigate('/');
   };
 
   return (
@@ -57,8 +51,8 @@ export const UserNav = () => {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleSignOut}>
-          Log out
+        <DropdownMenuItem onClick={handleSignOut} className="text-red-600 focus:text-red-600 cursor-pointer">
+           {isSigningOut ? <><Loader2 className="mr-2 h-4 w-4 animate-spin"/> Logging out...</> : 'Log out'}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

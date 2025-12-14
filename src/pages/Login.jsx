@@ -35,98 +35,19 @@ const Particle = ({ delay }) => {
   );
 };
 
-const SuccessDialog = ({ onDismiss }) => {
-  useEffect(() => {
-    const timer = setTimeout(() => {
-        onDismiss();
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, [onDismiss]);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onClick={onDismiss}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md cursor-pointer"
-    >
-      <motion.div
-        initial={{ scale: 0.5, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.5, opacity: 0 }}
-        className="bg-white rounded-3xl p-8 shadow-2xl flex flex-col items-center gap-6"
-        onClick={(e) => e.stopPropagation()} // Optional: keep dialog clickable or let background click dismiss
-      >
-        <div className="relative">
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: "spring", duration: 0.5 }}
-            className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center"
-          >
-            <motion.svg
-              className="w-12 h-12 text-green-600"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={3}
-            >
-              <motion.path
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M5 13l4 4L19 7"
-              />
-            </motion.svg>
-          </motion.div>
-          
-          <motion.div
-             animate={{ scale: [1, 1.2, 1] }}
-             transition={{ duration: 2, repeat: Infinity }}
-             className="absolute inset-0 bg-green-500/20 rounded-full -z-10"
-          />
-        </div>
-
-        <div className="text-center space-y-2">
-            <motion.h3 
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="text-2xl font-bold text-gray-900"
-            >
-                Login Successful!
-            </motion.h3>
-            <motion.p
-               initial={{ y: 20, opacity: 0 }}
-               animate={{ y: 0, opacity: 1 }}
-               transition={{ delay: 0.4 }}
-               className="text-gray-500 font-medium"
-            >
-                Welcome back to SpinTech.
-            </motion.p>
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-};
-
 export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [authLoading, setAuthLoading] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
   const { signIn, user } = useAuth();
   const navigate = useNavigate();
 
   // Redirect if already logged in
   useEffect(() => {
-    if (user && !showSuccess) {
+    if (user) {
       navigate('/dashboard', { replace: true });
     }
-  }, [user, navigate, showSuccess]);
+  }, [user, navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -138,7 +59,11 @@ export const Login = () => {
       if (error) {
         toast.error('Login Failed', { description: error.message });
       } else {
-        setShowSuccess(true);
+        toast.success("Welcome back!", {
+            description: "Login successfully.",
+            duration: 3000,
+        });
+        navigate('/dashboard');
       }
     } catch (err) {
       toast.error('An unexpected error occurred.');
@@ -148,16 +73,8 @@ export const Login = () => {
     }
   };
 
-  const handleSuccessDismiss = () => {
-      navigate('/dashboard');
-  };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-100 px-4 relative overflow-hidden">
-      <AnimatePresence>
-         {showSuccess && <SuccessDialog onDismiss={handleSuccessDismiss} />}
-      </AnimatePresence>
-
       {/* Animated particle rain background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(50)].map((_, i) => (
@@ -173,9 +90,9 @@ export const Login = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="relative z-10"
+        className="relative z-10 w-full flex justify-center"
       >
-        <Card className="w-full max-w-md shadow-2xl border-gray-200 bg-white/80 backdrop-blur-sm">
+        <Card className="w-full max-w-[550px] shadow-2xl border-gray-200 bg-white/80 backdrop-blur-sm">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl font-bold tracking-tight text-center">SpinTech CRM</CardTitle>
             <CardDescription className="text-center">

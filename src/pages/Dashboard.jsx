@@ -3,9 +3,11 @@ import { UserNav } from '@/components/dashboard/UserNav';
 import { ClientManager } from '@/components/dashboard/ClientManager';
 import { TeamView } from '@/components/dashboard/TeamView';
 import { AnalyticsView } from '@/components/dashboard/AnalyticsView';
-import { LayoutDashboard, Users, BarChart3, Settings, Menu } from 'lucide-react';
+import { LeadsManager } from '@/components/dashboard/LeadsManager';
+import { LayoutDashboard, Users, BarChart3, Settings, Menu, Briefcase } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import logo from "../assets/SpintechLogo.png"
 
 export const Dashboard = () => {
     const [currentView, setCurrentView] = useState('dashboard');
@@ -15,6 +17,8 @@ export const Dashboard = () => {
         switch (currentView) {
             case 'dashboard':
                 return <ClientManager />;
+            case 'clients': // New Marketing/Leads Tab
+                return <LeadsManager />;
             case 'team':
                 return <TeamView />;
             case 'analytics':
@@ -26,8 +30,9 @@ export const Dashboard = () => {
 
     const SidebarContent = ({ onClose }) => (
         <div className="h-full flex flex-col">
-            <div className="flex h-16 items-center border-b border-gray-200 px-6">
-               <span className="text-xl font-bold tracking-tight">SpinTech</span>
+            <div className="flex h-16 items-center border-b border-gray-200 px-6 gap-0">
+               <img src={logo} alt="Logo" className="h-8 w-8 p-0" />
+               <span className="text-xl font-extrabold tracking-tight">SpinTech</span>
             </div>
             <div className="space-y-1 p-4 flex-1">
                  <div 
@@ -39,6 +44,16 @@ export const Dashboard = () => {
                  >
                     <LayoutDashboard className="h-4 w-4" />
                     Dashboard
+                 </div>
+                 <div 
+                    onClick={() => { setCurrentView('clients'); onClose?.(); }}
+                    className={cn(
+                        "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium cursor-pointer transition-colors",
+                        currentView === 'clients' ? "bg-gray-100 text-gray-900" : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                    )}
+                 >
+                    <Briefcase className="h-4 w-4" />
+                    Clients
                  </div>
                  <div 
                     onClick={() => { setCurrentView('team'); onClose?.(); }}
